@@ -2,9 +2,24 @@ import React from 'react'; //Optional since we have a newer version of React (ab
 
 import DayListItem from './DayListItem';
 
-const DayList = () => {
+const DayList = (props) => {
+
+  const daysData = props.days;
+  const listDays = daysData.map((day) => {
+    return (
+      <DayListItem
+        key={day.id}
+        id={day.id}
+        name={day.name}
+        spots={day.spots}
+        selected={day.name === props.day}
+        setDay={props.setDay}
+      />
+    );
+  });
+
   return ( 
-    <ul></ul>
+    <ul>{listDays}</ul>
   );
 }
  
