@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"; //Optional since we have a newer version of React (above v17).
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -9,7 +9,7 @@ import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 
 /* 
-===> Initiates Storybook and registers our Button component
+===> Initiates Storybook and registers our Button component.
 - .addParameters() provides the default background color for our component.
 - .add() is called to generate a story.
 - action() is added to create a callback that appears in the Actions panel when clicked.
@@ -32,7 +32,7 @@ storiesOf("Button", module)
 
 
 /* 
-===> Initiates Storybook and registers our DayListItem component
+===> Initiates Storybook and registers our DayListItem component.
 */
 storiesOf("DayListItem", module)
   .addParameters({

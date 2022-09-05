@@ -1,4 +1,4 @@
-import React from 'react'; //Optional since we have a newer version of React (above v7).
+import React from 'react'; //Optional since we have a newer version of React (above v17).
 
 const DayListItem = (props) => {
   return (
@@ -7,6 +7,6 @@ const DayListItem = (props) => {
       <h3 className="text--light">{props.spots} spots remaining</h3>
     </li>
   );
-}
+};
  
 export default DayListItem;

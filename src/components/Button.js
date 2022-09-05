@@ -1,9 +1,10 @@
-import React from "react";
+import React from "react"; //Optional since we have a newer version of React (above v17).
+import classNames from "classnames"; //To optimize the implementation of our custom classes.
+
 import "components/Button.scss";
-import classNames from "classnames";
 
 const Button = (props) => {
-  const buttonClass = classNames('button', { //To optimize the implementation of our custom classes.
+  const buttonClass = classNames('button', {
     'button--confirm': props.confirm,
     'button--danger': props.danger
   });
@@ -16,6 +17,6 @@ const Button = (props) => {
       {props.children}
     </button>
   );
-}
+};
  
 export default Button;
