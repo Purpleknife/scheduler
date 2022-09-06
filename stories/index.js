@@ -6,10 +6,12 @@ import { action } from "@storybook/addon-actions";
 import "index.scss";
 
 import days from './data/daysData'; //To fetch the days array used in DayList.
+import interviewer from './data/interviewerData'; //To fetch the interviewer obj used in InterviewerListItem.
 
 import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
+import InterviewerListItem from "components/InterviewerListItem";
 
 /* 
 ===> Initiates Storybook and registers our Button component.
@@ -64,4 +66,37 @@ storiesOf("DayList", module)
   ))
   .add("Wednesday", () => (
       <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
+  ));
+
+
+/* 
+===> Initiates Storybook and registers our InterviewerListItem component.
+*/
+
+storiesOf("InterviewerListItem", module)
+  .addParameters({
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+  })
+  .add("Unselected", () => (
+    <InterviewerListItem
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+    />
+  ))
+  .add("Selected", () => (
+    <InterviewerListItem
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      selected
+    />
+  ))
+  .add("Clickable", () => (
+    <InterviewerListItem
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      setInterviewer={action("setInterviewer")}
+    />
   ));
