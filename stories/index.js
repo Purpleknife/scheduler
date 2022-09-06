@@ -1,4 +1,4 @@
-import React from "react"; //Optional since we have a newer version of React (above v17).
+import React, { Fragment } from "react"; //Optional since we have a newer version of React (above v17).
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -197,4 +197,10 @@ storiesOf("Appointment", module)
       onSave={action('onSave')}
       onCancel={action('onCancel')}
     />
-  );
+  )
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointment id={1} time="4pm" />
+      <Appointment time="5pm" />
+    </Fragment>
+  ));
