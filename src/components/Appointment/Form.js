@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from 'components/Button';
 import InterviewerList from 'components/InterviewerList';
 
-const Form = () => {
+const Form = (props) => {
+
+  const [student, setStudent] = useState(props.student || "");
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+
+  const reset = () => { //To reset the Form when a user clicks on Cancel.
+    setStudent('');
+    setInterviewer(null);
+  };
+
+  const cancel = () => {
+    reset();
+    props.onCancel();
+  }
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -13,20 +27,20 @@ const Form = () => {
             name="name"
             type="text"
             placeholder="Enter Student Name"
-            /*
-              This must be a controlled component
-              your code goes here
-            */
+            value={student}
+            onChange={(event) => setStudent(event.target.value)}
           />
         </form>
         <InterviewerList 
-          /* your code goes here */
+          value={interviewer}
+          interviewers={props.interviewers}
+          onChange={setInterviewer}
         />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger >Cancel</Button>
-          <Button confirm >Save</Button>
+          <Button danger onClick={cancel} >Cancel</Button>
+          <Button confirm onClick={props.onSave} >Save</Button>
         </section>
       </section>
     </main>
