@@ -17,6 +17,7 @@ import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment"; //Will go directly to index.js since it's the default module for a folder.
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
 
 /* 
 ===> Initiates Storybook and registers our Button component.
@@ -152,4 +153,12 @@ storiesOf("Appointment", module)
   )
   .add("Empty", () => 
     <Empty onAdd={action('onAdd')} />
+  )
+  .add("Show", () => 
+    <Show 
+      student='Lydia Miller-Jones'
+      interviewer={interviewer}
+      onEdit={action('onEdit')}
+      onDelete={action('onDelete')}
+    />
   );
