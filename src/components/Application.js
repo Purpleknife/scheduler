@@ -25,6 +25,7 @@ const days = [ //Couldn't import it from "../../stories/data/daysData" since it 
 
 const Application = (props) => {
   const [day, setDay] = useState('Monday');
+  console.log(day);
 
   return (
     <main className="layout">
