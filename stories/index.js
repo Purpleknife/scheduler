@@ -7,11 +7,13 @@ import "index.scss";
 
 import days from './data/daysData'; //To fetch the days array used in DayList.
 import interviewer from './data/interviewerData'; //To fetch the interviewer obj used in InterviewerListItem.
+import interviewers from './data/interviewersData'; //To fetch the interviewers array used in InterviewerList.
 
 import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
+import InterviewerList from "components/InterviewerList";
 
 /* 
 ===> Initiates Storybook and registers our Button component.
@@ -97,6 +99,33 @@ storiesOf("InterviewerListItem", module)
       id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
+      setInterviewer={action("setInterviewer")}
+    />
+  ));
+
+
+/* 
+===> Initiates Storybook and registers our InterviewerList component.
+*/
+
+storiesOf("InterviewerList", module)
+  .addParameters({
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+  })
+  .add("Initial", () => (
+    <InterviewerList
+      interviewers={interviewers}
+    />
+  ))
+  .add("Selected", () => (
+    <InterviewerList
+      interviewers={interviewers}
+      interviewer={3}
+    />
+  ))
+  .add("Clickable", () => (
+    <InterviewerList
+      interviewers={interviewers}
       setInterviewer={action("setInterviewer")}
     />
   ));
