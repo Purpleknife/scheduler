@@ -15,6 +15,8 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment"; //Will go directly to index.js since it's the default module for a folder.
+import Header from "components/Appointment/Header";
+import Empty from "components/Appointment/Empty";
 
 /* 
 ===> Initiates Storybook and registers our Button component.
@@ -143,7 +145,11 @@ storiesOf("Appointment", module)
     <Appointment />
   )
   .add("Appointment with Time", () => 
-    <Appointment 
-      time='12pm'
-    />
+    <Appointment time='12pm' />
+  )
+  .add("Header", () => 
+    <Header time='12pm' />
+  )
+  .add("Empty", () => 
+    <Empty onAdd={action('onAdd')} />
   );
