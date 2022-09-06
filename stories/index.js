@@ -18,6 +18,7 @@ import Appointment from "components/Appointment"; //Will go directly to index.js
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
 
 /* 
 ===> Initiates Storybook and registers our Button component.
@@ -160,5 +161,12 @@ storiesOf("Appointment", module)
       interviewer={interviewer}
       onEdit={action('onEdit')}
       onDelete={action('onDelete')}
+    />
+  )
+  .add("Confirm", () => 
+    <Confirm 
+      message='Delete the appointment?'
+      onConfirm={action('onConfirm')}
+      onCancel={action('onCancel')}
     />
   );
