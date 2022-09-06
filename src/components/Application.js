@@ -1,4 +1,4 @@
-import React from "react"; //Optional since we have a newer version of React (above v17).
+import React, { useState } from 'react'; //Importing React is optional since we have a newer version of React (above v17).
 
 import "components/Application.scss";
 
@@ -24,6 +24,8 @@ const days = [ //Couldn't import it from "../../stories/data/daysData" since it 
 
 
 const Application = (props) => {
+  const [day, setDay] = useState('Monday');
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -37,8 +39,8 @@ const Application = (props) => {
       <nav className="sidebar__menu">
       <DayList
         days={days}
-        day={"Monday"}
-        setDay={day => console.log(day)}
+        day={day}
+        setDay={setDay}
       />
       </nav>
       
