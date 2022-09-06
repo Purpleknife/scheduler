@@ -67,14 +67,12 @@ const Application = (props) => {
   const [day, setDay] = useState('Monday');
   console.log(day);
 
-  const appointmentsArray = Object.values(appointments);
+  const appointmentsArray = Object.values(appointments); //Turn appointments obj into an array.
   const appointmentsList = appointmentsArray.map((appointment) => {
     return (
       <Appointment
         key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
-        interview={appointment.interview}
+        {...appointment}
       />
     );
   })
