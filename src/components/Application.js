@@ -1,27 +1,10 @@
-import React, { useState } from 'react'; //Importing React is optional since we have a newer version of React (above v17).
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointment from 'components/Appointment';
-
-const days = [ //Couldn't import it from "../../stories/data/daysData" since it falls outside the /src directory.
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
 
 const appointments = {
   "1": {
@@ -65,7 +48,19 @@ const appointments = {
 
 const Application = (props) => {
   const [day, setDay] = useState('Monday');
-  console.log(day);
+  const [days, setDays] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/days') //Fetch /days data from scheduler-api.
+      .then(response => {
+        console.log(response.data);
+        setDays(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []); //The empty dependency array added prevents an infinite loop.
+
 
   const appointmentsArray = Object.values(appointments); //Turn appointments obj into an array.
   const appointmentsList = appointmentsArray.map((appointment) => {
@@ -75,7 +70,8 @@ const Application = (props) => {
         {...appointment}
       />
     );
-  })
+  });
+
 
   return (
     <main className="layout">
