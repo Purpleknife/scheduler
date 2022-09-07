@@ -6,70 +6,40 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from 'components/Appointment';
 
-const appointments = {
-  "1": {
-    id: 1,
-    time: "12pm",
-  },
-  "2": {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer:{
-        id: 3,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  "3": {
-    id: 3,
-    time: "2pm",
-  },
-  "4": {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Andrews",
-      interviewer:{
-        id: 4,
-        name: "Cohana Roy",
-        avatar: "https://i.imgur.com/FK8V841.jpg",
-      }
-    }
-  },
-  "5": {
-    id: 5,
-    time: "4pm",
-  }
-};
+import { getAppointmentsForDay } from 'helpers/selectors';
 
 
 const Application = (props) => {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    //appointments: {}
+    appointments: {}
   });
 
   const setDay = day => setState({ ...state, day });
-  const setDays = days => setState(prev => ({ ...prev, days }));
+
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   useEffect(() => {
-    axios.get('/api/days') //Fetch /days data from scheduler-api.
-      .then(response => {
-        console.log(response.data);
-        setDays(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    Promise.all([
+      axios.get('api/days'),
+      axios.get('api/appointments'),
+      //axios.get('api/interviewers'),
+    ]).then((all) => {
+      setState(prev => ({
+        ...prev,
+        days: all[0].data,
+        appointments: all[1].data,
+        //interviewers: all[2].data
+      }));
+    })
+    .catch((error) => {
+      console.error(error.message);
+    });
   }, []); //The empty dependency array added prevents an infinite loop.
 
 
-  const appointmentsArray = Object.values(appointments); //Turn appointments obj into an array.
-  const appointmentsList = appointmentsArray.map((appointment) => {
+  const appointmentsList = dailyAppointments.map((appointment) => {
     return (
       <Appointment
         key={appointment.id}
