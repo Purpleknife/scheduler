@@ -6,7 +6,7 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from 'components/Appointment';
 
-import { getAppointmentsForDay, getInterview } from 'helpers/selectors';
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from 'helpers/selectors';
 
 
 const Application = (props) => {
@@ -37,6 +37,8 @@ const Application = (props) => {
     });
   }, []); //The empty dependency array added prevents an infinite loop.
 
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
+  
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const appointmentsList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
@@ -47,6 +49,7 @@ const Application = (props) => {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={dailyInterviewers}
       />
     );
   });
