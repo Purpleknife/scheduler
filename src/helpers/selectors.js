@@ -37,3 +37,16 @@ export const getInterview = (state, interview) => {
   return output;  
 };
 
+
+export const getInterviewersForDay = (state, day) => {
+
+  const interviewersForGivenDay = state.days.filter(oneDay => oneDay.name === day)[0]; //The [0] is because we want the obj inside the array.
+  
+  if (!interviewersForGivenDay) { //If no interviwers on a given day, days data should be an empty array,
+    return [];
+  };
+  
+  const getDetailledInterviewers = interviewersForGivenDay.interviewers.map(interviewerID => state.interviewers[interviewerID]); //Based on the id, fetch the corresponding interviewers from the array interviewers that's inside interviewersForGivenDay.
+  
+  return getDetailledInterviewers;
+};
