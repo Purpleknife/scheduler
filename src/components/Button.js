@@ -1,4 +1,4 @@
-import React from "react"; //Optional since we have a newer version of React (above v17).
+import React from "react";
 import classNames from "classnames"; //To optimize the implementation of our custom classes.
 
 import "components/Button.scss";

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"; //Optional since we have a newer version of React (above v17).
+import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
