@@ -5,34 +5,23 @@ const useVisualMode = (initial) => {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
 
-  const transition = (newMode) => {
-    setMode(newMode); //If a new mode is passed, set it to the new mode.
-    setHistory([newMode, ...history]);
-    //console.log('newMode', newMode);
+  const transition = (newMode, replace = false) => { //Transition to a new mode.
+    setMode(newMode);
+    
+    if (!replace) { //If replace is true, add the newMode to history.
+      setHistory(prev => [...prev, newMode]); //The new mode is added at the top of the stack, that's why it's added before ...prev.
+    };
   };
 
   
-  const back = () => {
-    const [lastAddedMode, ...rest] = history;
-    //console.log('prevMode', prevMode);
-    // console.log('zero', rest[0]);
-    // console.log('history', history);
-    //console.log('pop', history.pop());
-    // console.log('history length', history[history.length - 2]);
-    //console.log('slice', history.slice(0, -1));
-    //console.log('mode', mode);
-    if (history.length > 1) {
-      setMode(rest[0]);
-      setHistory([...rest]);
-      //console.log('rest', rest);
-      //console.log('rest...', [...rest]);
-      // console.log('history after slice', history);
-      // console.log('history after pop', history[history.length - 2]);
-      return;
-    }
+  const back = () => { //Go back to the previous mode in our history array.
 
-    setMode(history[0]);
+    if (history.length > 1) { //Limit added because the user shouldn't go back past the initial mode.
+      setMode(history[history.length - 2]); //Always take the prev mode, second to last in the array.
+      setHistory((history.slice(0, history.length - 1))); //Remove the last element from the array. Chose slice because it doesn't change the original array.
+    };
   };
+
 
   return { 
     mode,
