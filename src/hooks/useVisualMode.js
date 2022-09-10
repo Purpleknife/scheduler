@@ -9,7 +9,7 @@ const useVisualMode = (initial) => {
     setMode(newMode);
     
     if (!replace) { //If replace is true, add the newMode to history.
-      setHistory(prev => [...prev, newMode]); //The new mode is added at the top of the stack, that's why it's added before ...prev.
+      setHistory(prev => [...prev, newMode]); //The new mode is added at the top of the stack.
     };
   };
 
