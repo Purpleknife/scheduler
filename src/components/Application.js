@@ -37,6 +37,10 @@ const Application = (props) => {
     });
   }, []); //The empty dependency array added prevents an infinite loop.
 
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+  };
+
   const dailyInterviewers = getInterviewersForDay(state, state.day);
   
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -50,6 +54,7 @@ const Application = (props) => {
         time={appointment.time}
         interview={interview}
         interviewers={dailyInterviewers}
+        bookInterview={bookInterview}
       />
     );
   });
