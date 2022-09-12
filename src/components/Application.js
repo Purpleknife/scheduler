@@ -33,12 +33,29 @@ const Application = (props) => {
       }));
     })
     .catch((error) => {
-      console.error(error.message);
+      console.error(error);
     });
   }, []); //The empty dependency array added prevents an infinite loop.
 
   const bookInterview = (id, interview) => {
     console.log(id, interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.put(`/api/appointments/${id}`, appointment)
+      .then(setState((prev) => ({...prev, appointments})))
+      .catch((error) => {
+        console.error(error);
+      });
+    
   };
 
   const dailyInterviewers = getInterviewersForDay(state, state.day);
