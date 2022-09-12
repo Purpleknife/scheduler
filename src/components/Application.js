@@ -37,6 +37,7 @@ const Application = (props) => {
     });
   }, []); //The empty dependency array added prevents an infinite loop.
 
+  
   const bookInterview = (id, interview) => {
     console.log(id, interview);
 
@@ -58,6 +59,25 @@ const Application = (props) => {
     
   };
 
+
+  const cancelInterview = (id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${id}`, appointment)
+      .then(setState((prev) => ({...prev, appointments})))
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const dailyInterviewers = getInterviewersForDay(state, state.day);
   
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -72,6 +92,7 @@ const Application = (props) => {
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
