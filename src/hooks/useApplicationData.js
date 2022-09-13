@@ -91,7 +91,8 @@ const useApplicationData = () => {
     });
 
     //WebSocket implementation:
-    const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+    const URL = process.env.REACT_APP_WEBSOCKET_URL;
+    const ws = new WebSocket(URL);
 
       ws.addEventListener('message', (event) => {
         const { type, id, interview } = JSON.parse(event.data);
