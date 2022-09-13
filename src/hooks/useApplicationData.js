@@ -114,7 +114,7 @@ const useApplicationData = () => {
         dispatch({ type: SET_INTERVIEW, id, interview })
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Could not complete PUT request:', error);
       });
   };
 
@@ -125,7 +125,7 @@ const useApplicationData = () => {
         dispatch({ type: SET_INTERVIEW, id, interview: null }) //Update appointments and remaining spots.
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Could not complete DELETE request:', error);
       });
   };
 
