@@ -90,6 +90,22 @@ const useApplicationData = () => {
       console.error(error);
     });
 
+    //WebSocket implementation:
+    const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+      ws.addEventListener('message', (event) => {
+      console.log('Message received:', event.data);
+
+      const { type, id, interview } = JSON.parse(event.data);
+
+      if (type === 'SET_INTERVIEW') {
+        dispatch({ type, id, interview });
+      }
+    
+    });
+    //return () => ws.close();
+    
+
   }, []); //The empty dependency array added prevents an infinite loop.
 
   
