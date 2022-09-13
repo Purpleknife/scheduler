@@ -1,15 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 
+
 const useApplicationData = () => {
-  const [state, setState] = useState({
+
+  const SET_DAY = "SET_DAY";
+  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+  const SET_INTERVIEW = "SET_INTERVIEW";
+  
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case SET_DAY:
+        return {
+          ...state,
+          day: action.day
+        }
+      case SET_APPLICATION_DATA:
+        return {
+          ...state,
+          days: action.days,
+          appointments: action.appointments,
+          interviewers: action.interviewers
+        }
+      case SET_INTERVIEW:
+        return {
+          ...state,
+          days: action.days,
+          appointments: action.appointments,
+        }
+      
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
+    }
+  };
+  const initialState = {
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
-  });
+  };
   
-  const setDay = day => setState({ ...state, day });
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const setDay = day => dispatch({ type: SET_DAY, day });
 
   useEffect(() => {
     Promise.all([
@@ -17,16 +53,17 @@ const useApplicationData = () => {
       axios.get('api/appointments'),
       axios.get('api/interviewers'),
     ]).then((all) => {
-      setState(prev => ({
-        ...prev,
-        days: all[0].data,
-        appointments: all[1].data,
-        interviewers: all[2].data
-      }));
+        dispatch({
+          type: SET_APPLICATION_DATA,
+          days: all[0].data,
+          appointments: all[1].data,
+          interviewers: all[2].data
+        });
     })
     .catch((error) => {
       console.error(error);
     });
+    
   }, []); //The empty dependency array added prevents an infinite loop.
 
   
@@ -43,7 +80,7 @@ const useApplicationData = () => {
     const updatedDays = [...days];
     updatedDays[currentDayIndex] = updatedDay; //Update the days, done this way because it's an array, unlike 'day'.
 
-    setState(prev => ({...prev, days: updatedDays})); //Update the state.
+    return updatedDays;
   };
 
 
@@ -58,10 +95,11 @@ const useApplicationData = () => {
       [id]: appointment
     };
 
+    const days = updateSpots(state.days, appointments);
+
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(
-        setState((prev) => ({...prev, appointments})),
-        updateSpots(state.days, appointments)
+        dispatch({ type: SET_INTERVIEW, appointments, days }),
       )
       .catch((error) => {
         console.error(error);
@@ -81,10 +119,11 @@ const useApplicationData = () => {
       [id]: appointment
     };
 
+    const days = updateSpots(state.days, appointments);
+
     return axios.delete(`/api/appointments/${id}`, appointment)
       .then(
-        setState((prev) => ({...prev, appointments})),
-        updateSpots(state.days, appointments)
+        dispatch({ type: SET_INTERVIEW, appointments, days }),
       )
       .catch((error) => {
         console.error(error);
