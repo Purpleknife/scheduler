@@ -22,11 +22,37 @@ const useApplicationData = () => {
           appointments: action.appointments,
           interviewers: action.interviewers
         }
-      case SET_INTERVIEW:
+      case SET_INTERVIEW: //Implement the spots remaining functionality inside SET_INTERVIEW.
+        const updateSpots = (days, appointments) => {
+          const currentDay = days.find(day => day.name === state.day);
+      
+          const appointIDs = currentDay.appointments;
+          const nullInterviews = appointIDs.filter((id) => !appointments[id].interview); //Get the number of appointments where interview is null.
+          const spotsAvailable = nullInterviews.length;
+            
+          const updatedDay = { ...currentDay, spots: spotsAvailable }; //Update the day without altering the original obj.
+      
+          const currentDayIndex = days.findIndex(day => day.name === state.day); //Find the index so we can update the array days.
+          const updatedDays = [...days];
+          updatedDays[currentDayIndex] = updatedDay; //Update the days, done this way because it's an array, unlike 'day'.
+      
+          return updatedDays;
+        };
+
+        const appointment = {
+          ...state.appointments[action.id],
+          interview: action.interview ? { ...action.interview } : null
+        };
+    
+        const appointments = {
+          ...state.appointments,
+          [action.id]: appointment
+        };
+
         return {
           ...state,
-          days: action.days,
-          appointments: action.appointments,
+          days: updateSpots(state.days, appointments),
+          appointments
         }
       
       default:
@@ -35,6 +61,7 @@ const useApplicationData = () => {
         );
     }
   };
+
   const initialState = {
     day: "Monday",
     days: [],
@@ -42,7 +69,6 @@ const useApplicationData = () => {
     interviewers: {}
   };
   
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setDay = day => dispatch({ type: SET_DAY, day });
@@ -63,67 +89,24 @@ const useApplicationData = () => {
     .catch((error) => {
       console.error(error);
     });
-    
+
   }, []); //The empty dependency array added prevents an infinite loop.
 
   
-  const updateSpots = (days, appointments) => {
-    const currentDay = days.find(day => day.name === state.day);
-
-    const appointIDs = currentDay.appointments;
-    const nullInterviews = appointIDs.filter((id) => !appointments[id].interview); //Get the number of appointments where interview is null.
-    const spotsAvailable = nullInterviews.length;
-      
-    const updatedDay = { ...currentDay, spots: spotsAvailable }; //Update the day without altering the original obj.
-
-    const currentDayIndex = days.findIndex(day => day.name === state.day); //Find the index so we can update the array days.
-    const updatedDays = [...days];
-    updatedDays[currentDayIndex] = updatedDay; //Update the days, done this way because it's an array, unlike 'day'.
-
-    return updatedDays;
-  };
-
 
   const bookInterview = (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    const days = updateSpots(state.days, appointments);
-
-    return axios.put(`/api/appointments/${id}`, appointment)
-      .then(
-        dispatch({ type: SET_INTERVIEW, appointments, days }),
-      )
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(() => dispatch({ type: SET_INTERVIEW, id, interview }))
       .catch((error) => {
         console.error(error);
       });
-    
   };
 
 
   const cancelInterview = (id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    const days = updateSpots(state.days, appointments);
-
-    return axios.delete(`/api/appointments/${id}`, appointment)
+    return axios.delete(`/api/appointments/${id}`)
       .then(
-        dispatch({ type: SET_INTERVIEW, appointments, days }),
+        dispatch({ type: SET_INTERVIEW, id, interview: null }), //Update appointments and remaining spots.
       )
       .catch((error) => {
         console.error(error);
