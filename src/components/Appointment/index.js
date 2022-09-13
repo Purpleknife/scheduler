@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './styles.scss';
 
@@ -53,6 +53,16 @@ const Appointment = (props) => {
       .catch((error) => transition(ERROR_DELETE, true));
     
   };
+
+  useEffect(() => { //To solve transition bug after implemting WebSocket.
+    if (props.interview && mode === EMPTY) {
+     transition(SHOW);
+    }
+    if (props.interview === null && mode === SHOW) {
+     transition(EMPTY);
+    }
+   }, [props.interview, transition, mode]);
+
 
   return (
     <article className="appointment">
