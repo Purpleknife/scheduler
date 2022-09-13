@@ -94,16 +94,13 @@ const useApplicationData = () => {
     const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
       ws.addEventListener('message', (event) => {
-      console.log('Message received:', event.data);
+        const { type, id, interview } = JSON.parse(event.data);
 
-      const { type, id, interview } = JSON.parse(event.data);
-
-      if (type === 'SET_INTERVIEW') {
-        dispatch({ type, id, interview });
-      }
-    
-    });
-    //return () => ws.close();
+        if (type === 'SET_INTERVIEW') {
+          dispatch({ type, id, interview });
+        }
+      });
+    return () => ws.close(); //To close the ws connection.
     
 
   }, []); //The empty dependency array added prevents an infinite loop.
@@ -112,7 +109,9 @@ const useApplicationData = () => {
 
   const bookInterview = (id, interview) => {
     return axios.put(`/api/appointments/${id}`, { interview })
-      .then(() => dispatch({ type: SET_INTERVIEW, id, interview }))
+      .then(() => {
+        dispatch({ type: SET_INTERVIEW, id, interview })
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -121,9 +120,9 @@ const useApplicationData = () => {
 
   const cancelInterview = (id) => {
     return axios.delete(`/api/appointments/${id}`)
-      .then(
-        dispatch({ type: SET_INTERVIEW, id, interview: null }), //Update appointments and remaining spots.
-      )
+      .then(() => {
+        dispatch({ type: SET_INTERVIEW, id, interview: null }) //Update appointments and remaining spots.
+      })
       .catch((error) => {
         console.error(error);
       });
