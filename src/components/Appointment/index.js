@@ -39,14 +39,14 @@ const Appointment = (props) => {
 
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .catch((error) => transition(ERROR_SAVE, true));
+      .catch((error) => transition(ERROR_SAVE));
     
   };
 
 
   const destroy = (event) => {
 
-    transition(DELETING, true);
+    transition(DELETING);
 
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
@@ -65,7 +65,7 @@ const Appointment = (props) => {
 
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && props.interview && (
@@ -83,8 +83,8 @@ const Appointment = (props) => {
           interviewers={props.interviewers}
         />
       )}
-      {mode === SAVING && <Status message={'Saving...'}/>}
-      {mode === DELETING && <Status message={'Deleting...'}/>}
+      {mode === SAVING && <Status message='Saving'/>}
+      {mode === DELETING && <Status message='Deleting'/>}
       {mode === CONFIRM && (
         <Confirm 
           onCancel={() => back()}
@@ -103,13 +103,13 @@ const Appointment = (props) => {
       )}
       {mode === ERROR_SAVE && (
         <Error 
-          message={'Could not schedule appointment.'}
+          message='Could not schedule appointment.'
           onClose={() => back()}
         />
       )}
       {mode === ERROR_DELETE && (
         <Error 
-          message={'Could not cancel appointment.'}
+          message='Could not cancel appointment.'
           onClose={() => back()}
         />
       )}
