@@ -15,7 +15,9 @@ import {
   queryByAltText,
   getAllByText,
   queryAllByAltText,
-  getAllByAltText
+  getAllByAltText,
+  queryAllByText,
+  getByLabelText
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -134,8 +136,7 @@ describe('Application', () => {
 
     const appointment = getAllByTestId(container, "appointment")[0];
 
-    fireEvent.click(getByAltText(appointment, "Add"));
-    
+    fireEvent.click(getByAltText(appointment, "Add"));    
 
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
@@ -147,8 +148,8 @@ describe('Application', () => {
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-    await waitForElement(() => queryAllByAltText(appointment, "Could not schedule appointment."));
-  
+    await waitForElement(() => queryAllByText(appointment, "Could not schedule appointment."));
+    
   });
 
 
