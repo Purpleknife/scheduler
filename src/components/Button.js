@@ -3,6 +3,7 @@ import classNames from "classnames"; //To optimize the implementation of our cus
 
 import "components/Button.scss";
 
+
 const Button = (props) => {
   const buttonClass = classNames('button', {
     'button--confirm': props.confirm,

@@ -13,11 +13,8 @@ import {
   getByPlaceholderText,
   queryByText,
   queryByAltText,
-  getAllByText,
   queryAllByAltText,
-  getAllByAltText,
-  queryAllByText,
-  getByLabelText
+  queryAllByText
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -34,6 +31,7 @@ describe('Application', () => {
   
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
+
 
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
@@ -148,8 +146,9 @@ describe('Application', () => {
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
+    waitForElement(() => expect(getByText(appointment, "Error")).toBeInTheDocument());
+
     await waitForElement(() => queryAllByText(appointment, "Could not schedule appointment."));
-    
   });
 
 
@@ -173,8 +172,9 @@ describe('Application', () => {
 
     expect(getByText(appointment, "Deleting")).toBeInTheDocument();
 
-    await waitForElement(() => queryAllByAltText(appointment, "Could not cancel appointment."));
+    waitForElement(() => expect(getByText(appointment, "Error")).toBeInTheDocument());
 
+    await waitForElement(() => queryAllByAltText(appointment, "Could not cancel appointment."));
   });
 
 

@@ -12,6 +12,7 @@ import Error from './Error';
 
 import useVisualMode from 'hooks/useVisualMode';
 
+
 const Appointment = (props) => {
   const EMPTY = 'EMPTY';
   const SHOW = 'SHOW';
@@ -54,14 +55,14 @@ const Appointment = (props) => {
     
   };
 
-  useEffect(() => { //To solve transition bug after implemting WebSocket.
+  useEffect(() => { //To solve transition bug after implementing WebSocket.
     if (props.interview && mode === EMPTY) {
      transition(SHOW);
     }
     if (props.interview === null && mode === SHOW) {
      transition(EMPTY);
     }
-   }, [props.interview, transition, mode]);
+  }, [props.interview, transition, mode]);
 
 
   return (
