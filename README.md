@@ -33,6 +33,9 @@ This project's goals were:
 - Cypress
 - Jest
 - Prop-Types
+- Axios
+- Classnames
+- CSS
 - SASS
 
 ## Additional Info
