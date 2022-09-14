@@ -2,6 +2,10 @@
 
 Interview Scheduler is a React app that allows you to book, edit or cancel appointments.
 
+This project's goals were:
+- Build a SPA with React.
+- Get familiar with React and the concepts of components and hooks.
+- Get familiar with unit, integration and E2E testing.
 
 ## Features
 
