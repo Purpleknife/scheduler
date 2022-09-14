@@ -13,13 +13,13 @@ Interview Scheduler is a React app that allows you to book, edit or cancel appoi
 
 ## Getting Started
 
-1- `git clone` this project.
-2- Install dependencies with `npm install`.
-3- Run Webpack Development Server with `npm start`.
-4- To run your tests:
-  - Run Jest Test Framework with `npm test`.
-  - Running Storybook Visual Testbed with `npm run storybook`.
-  - Run Cypress with `npm run cypress`.
+- `git clone` this project.
+- Install dependencies with `npm install`.
+- Run Webpack Development Server with `npm start`.
+- To run your tests:
+    - Run Jest Test Framework with `npm test`.
+    - Running Storybook Visual Testbed with `npm run storybook`.
+    - Run Cypress with `npm run cypress`.
 
 ## Dependencies
 
@@ -43,12 +43,12 @@ Interview Scheduler is a React app that allows you to book, edit or cancel appoi
 
 ### App Overview:
 
-!["App overview"]()
-!["Create an appointment"]()
-!["Delete an appointment"]()
+!["App overview"](https://github.com/Purpleknife/scheduler/blob/master/docs/app-overview.png?raw=true)
+!["Create an appointment"](https://github.com/Purpleknife/scheduler/blob/master/docs/create-appointment.png?raw=true)
+!["Delete an appointment"](https://github.com/Purpleknife/scheduler/blob/master/docs/delete-appointment.png?raw=true)
 
 ### Testing results:
 
-!["Test coverage"]()
-!["Storybook"]()
-!["Cypress"]()
+!["Test coverage"](https://github.com/Purpleknife/scheduler/blob/master/docs/code-test-coverage.png?raw=true)
+!["Storybook"](https://github.com/Purpleknife/scheduler/blob/master/docs/storybook-tests.png?raw=true)
+!["Cypress"](https://github.com/Purpleknife/scheduler/blob/master/docs/cypress-tests.png?raw=true)
