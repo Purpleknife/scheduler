@@ -39,7 +39,7 @@ This project's goals were:
 
 - The server for this app runs on port 8001, through an another repo: `scheduler-api`.
 - The server is deployed to Heroku.
-- The client is deployed to Netlify.
+- The client is deployed to [Netlify](https://63223761156ffb57923ff85c--superb-babka-0af46b.netlify.app/) (*The data may take some time to load if the Heroku hosted server has been initialized more than 30min ago*).
 - The testing runs through CircleCI and deploys from master branch to production branch.
 
 
