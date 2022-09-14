@@ -38,9 +38,7 @@ const useApplicationData = () => {
       console.error(error);
     });
 
-    // //WebSocket implementation:
-    // webSocketUpdate();
-    
+    realTimeUpdate(); //WebSocket implementation.
 
   }, []); //The empty dependency array added prevents an infinite loop.
 
@@ -68,19 +66,19 @@ const useApplicationData = () => {
   };
 
 
-  // const webSocketUpdate = () => {
-  //   const URL = process.env.REACT_APP_WEBSOCKET_URL;
-  //   const ws = new WebSocket(URL);
+  const realTimeUpdate = () => {
+    const URL = process.env.REACT_APP_WEBSOCKET_URL;
+    const ws = new WebSocket(URL);
   
-  //     ws.addEventListener('message', (event) => {
-  //       const { type, id, interview } = JSON.parse(event.data);
+      ws.addEventListener('message', (event) => {
+        const { type, id, interview } = JSON.parse(event.data);
   
-  //       if (type === 'SET_INTERVIEW') {
-  //         dispatch({ type, id, interview });
-  //       }
-  //     });
-  //   return () => ws.close(); //To close the ws connection.
-  // };
+        if (type === 'SET_INTERVIEW') {
+          dispatch({ type, id, interview });
+        }
+      });
+    return () => ws.close(); //To close the ws connection.
+  };
 
 
   return {
