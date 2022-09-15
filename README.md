@@ -56,6 +56,6 @@ This project's goals were:
 
 ### Testing results:
 
-!["Test coverage"](https://github.com/Purpleknife/scheduler/blob/master/docs/code-test-coverage.png?raw=true)
+!["Test coverage"](https://github.com/Purpleknife/scheduler/blob/master/docs/test-coverage.png?raw=true)
 !["Storybook"](https://github.com/Purpleknife/scheduler/blob/master/docs/storybook-tests.png?raw=true)
 !["Cypress"](https://github.com/Purpleknife/scheduler/blob/master/docs/cypress-tests.png?raw=true)
