@@ -40,14 +40,14 @@ const Appointment = (props) => {
 
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .catch((error) => transition(ERROR_SAVE));
+      .catch((error) => transition(ERROR_SAVE, true));
     
   };
 
 
   const destroy = (event) => {
 
-    transition(DELETING);
+    transition(DELETING, true);
 
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
@@ -79,7 +79,7 @@ const Appointment = (props) => {
       )}
       {mode === CREATE && (
         <Form 
-          onCancel={() => back()}
+          onCancel={back}
           onSave={save}
           interviewers={props.interviewers}
         />
@@ -88,7 +88,7 @@ const Appointment = (props) => {
       {mode === DELETING && <Status message='Deleting'/>}
       {mode === CONFIRM && (
         <Confirm 
-          onCancel={() => back()}
+          onCancel={back}
           onConfirm={destroy}
           message='Are you sure you would like to delete?'
         />
@@ -98,20 +98,20 @@ const Appointment = (props) => {
           student={props.interview.student}
           interviewer={props.interview.interviewer.id}
           interviewers={props.interviewers}
-          onCancel={() => back()}
+          onCancel={back}
           onSave={save}
         />
       )}
       {mode === ERROR_SAVE && (
         <Error 
           message='Could not schedule appointment.'
-          onClose={() => back()}
+          onClose={back}
         />
       )}
       {mode === ERROR_DELETE && (
         <Error 
           message='Could not cancel appointment.'
-          onClose={() => back()}
+          onClose={back}
         />
       )}
     </article>

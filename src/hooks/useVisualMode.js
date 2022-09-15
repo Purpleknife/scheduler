@@ -10,8 +10,10 @@ const useVisualMode = (initial) => {
     setMode(newMode);
     
     if (!replace) { //If replace is true, add the newMode to history.
-      setHistory(prev => [...prev, newMode]); //The new mode is added at the top of the stack.
+      return setHistory(prev => [...prev, newMode]); //The new mode is added at the top of the stack.
     };
+    setHistory(prev => [...prev.slice(0, -1), newMode]);
+    
   };
 
   
@@ -19,7 +21,7 @@ const useVisualMode = (initial) => {
 
     if (history.length > 1) { //Limit added because the user shouldn't go back past the initial mode.
       setMode(history[history.length - 2]); //Always take the prev mode, second to last in the array.
-      setHistory((history.slice(0, history.length - 1))); //Remove the last element from the array. Chose slice because it doesn't change the original array.
+      setHistory(prev => [...prev.slice(0, -1)]); //Remove the last element from the array. Chose slice because it doesn't change the original array.
     };
   };
 
